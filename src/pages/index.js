@@ -16,7 +16,7 @@ const IndexPage = ({data}) => {
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
       <Bio />
-      <p>kldsjflskdjf</p>
+      <p>-------------------------</p>
       <ol>
           {
             posts.map(post => {
@@ -26,7 +26,11 @@ const IndexPage = ({data}) => {
                 <li key={title}>
                   <article>
                     <header>
-                      <h2>{title}</h2>
+                      <h2>
+                        <Link to={post.fields.slug} itemProp="url">
+                          <span itemProp="headline">{title}</span>
+                        </Link>
+                      </h2>
                       <small>{post.frontmatter.date}</small>
                     </header>
                     <section>
@@ -59,6 +63,9 @@ export const pageQuery = graphql`
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       nodes {
         excerpt
+        fields {
+          slug
+        }
         frontmatter {
           date(formatString: "MMMM DD, YYYY")
           title
